@@ -16,6 +16,9 @@ const Home = () => {
           <div className="largeText">HOW IT WORKS:</div>
           <div>
             <ol>
+              <li>
+                Fund your wallet from the testnet <a href="https://testnet.cspr.live/tools/faucet">here.</a>
+              </li>
               <li>Connect your Casper wallet by click the "connect" button above, the signer will prompt you to connect</li>
              <li>
                 Go to the game tab and play a game against the computer. Once you win - or lose - your session score will go up. The session score is the second number in the score area, the first number is your saved score. When you are done playing, you can save to chain! You can play as many games as you want before saving, and saving is optional. If you dont save, and if you reload the page, you will lose your session score.
