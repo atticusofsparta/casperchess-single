@@ -16,16 +16,12 @@ const Home = () => {
           <div className="largeText">HOW IT WORKS:</div>
           <div>
             <ol>
-              <li>Connect your Casper wallet</li>
-              <li>
-                Match with other players in the "Game" tab for a round of chess
+              <li>Connect your Casper wallet by click the "connect" button above, the signer will prompt you to connect</li>
+             <li>
+                Go to the game tab and play a game against the computer. Once you win - or lose - your session score will go up. The session score is the second number in the score area, the first number is your saved score. When you are done playing, you can save to chain! You can play as many games as you want before saving, and saving is optional. If you dont save, and if you reload the page, you will lose your session score.
               </li>
               <li>
-                Whichever player loses has to pay gas to commit the game log to
-                the blockchain
-              </li>
-              <li>
-                The winner gets a permanent, immutable record of their victory
+                To save to chain, click on the "save" button. You will be prompted to sign a transaction. Wait for your saved score to update. Once the score updates, your session score is saved to the blockchain. Good luck!
               </li>
             </ol>
           </div>

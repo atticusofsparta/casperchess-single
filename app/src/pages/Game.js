@@ -5,7 +5,7 @@ import { Chessboard } from 'react-chessboard';
 
 
 
-export default function Game({ boardWidth }, {gametoapp}) {
+export default function Game({ gametoapp }, { boardWidth }) {
     const chessboardRef = useRef();
     const [game, setGame] = useState(new Chess());
     const [boardOrientation, setBoardOrientation] = useState('white');
@@ -47,8 +47,8 @@ export default function Game({ boardWidth }, {gametoapp}) {
       if (win === true){setGameResult("win")}
       if (win === false){setGameResult("loss")}
       if (stalemate === true){setGameResult("stalemate")}
-      if (gameResult === "win" || "loss" || "stalemate") {gametoapp(gameResult)}
-    },[game, win, stalemate])
+      if (gameResult === "win" ||  gameResult ===  "loss" || gameResult === "stalemate") {gametoapp(gameResult)}
+    },[game, win, stalemate, gameResult])
     
     
   
