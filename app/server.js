@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
+const nodeAddress = "http://95.216.67.162:7777/rpc";
 
 //middleware
 app.use(cors());
@@ -10,8 +11,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 const contracthash = "hash-6f978f1bd5d7071d464fa3c4fe72f5c4d7aedbad6b558402ccf5d7aecbfd915b";
 const { CasperServiceByJsonRPC,DeployUtil,CLPublicKey,Contracts,CasperClient} = require("casper-js-sdk");
-const client = new CasperServiceByJsonRPC("http://95.216.67.162:7777/rpc");
-const deployclient = new CasperClient("http://95.216.67.162:7777/rpc");
+const client = new CasperServiceByJsonRPC(nodeAddress);
+const deployclient = new CasperClient(nodeAddress);
 const contract = new Contracts.Contract(client);
 contract.setContractHash(contracthash);
 
@@ -19,7 +20,7 @@ contract.setContractHash(contracthash);
 app.post('/sendDeploy', (req, res) => {
     const signedJSON = req.body; //Get JSON from POST body
     let signedDeploy = DeployUtil.deployFromJson(signedJSON).unwrap(); //Unwrap from JSON to Deploy object
-    signedDeploy.send("http://95.216.67.162:7777/rpc").then((response) => { //Send Signed Deploy
+    signedDeploy.send(nodeAddress).then((response) => { //Send Signed Deploy
       res.send(response); //Send this back to the frontend
     }).catch((error) => {
       console.log(error);
