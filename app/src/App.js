@@ -7,6 +7,8 @@ import Nopage from './pages/Nopage';
 import Game from './pages/Game';
 import Layout from './pages/Layout';
 import axios from "axios";
+import ModalRoot from "./modules/modals/modal components/ModalRoot";
+
 var getDeployInterval = null;
 //import win/loss state from game
 
@@ -217,7 +219,7 @@ function App() {
 //render page
   return (
     <div>
-
+<ModalRoot/>
 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   <div className="container-fluid">
     <a className="navbar-brand" href="/Home">Casper Chess</a>

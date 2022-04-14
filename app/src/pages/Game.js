@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState } from 'react';
 import Chess from 'chess.js';
 import '../style.css';
 import { Chessboard } from 'react-chessboard';
+import PopUp from '../modules/modals/modal files/PopUp';
+import AddModal from '../modules/modals/modal components/AddModal';
 
 
 
@@ -24,10 +26,12 @@ export default function Game({ gametoapp }, { boardWidth }) {
         if (playerInCheckmate === "b") {
           setWin(true)
           console.log("white wins")
+          AddModal(PopUp)
         }
         if (playerInCheckmate === "w") {
           setWin(false)
           console.log("black wins")
+          AddModal(PopUp)
         }
   
         console.log(`${playerInCheckmate} in checkmate`)
@@ -38,6 +42,7 @@ export default function Game({ gametoapp }, { boardWidth }) {
         setStalemate(true)
       
         console.log("in stalemate ", stalemate)
+        AddModal(PopUp)
       }
 
     },[game])
