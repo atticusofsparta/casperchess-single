@@ -4,14 +4,18 @@ import '../style.css';
 import { Chessboard } from 'react-chessboard';
 import PopUp from '../modules/modals/modal files/PopUp';
 import AddModal from '../modules/modals/modal components/AddModal';
-
+import CloseModal from '../modules/modals/modal components/CloseModal';
+import Modal from '../modules/modals/modal components/Modal';
+import ModalBody from '../modules/modals/modal components/ModalBody';
+import ModalHeader from '../modules/modals/modal components/ModalHeader';
+import ModalFooter from '../modules/modals/modal components/ModalFooter';
 
 
 export default function Game({ gametoapp }, { boardWidth }) {
     const chessboardRef = useRef();
     const [game, setGame] = useState(new Chess());
     const [boardOrientation, setBoardOrientation] = useState('white');
-    const [currentTimeout, setCurrentTimeout] = useState(undefined);
+    const [currentTimeout, setCurrentTimeout] = useState();
 
     //score logic
     const [win, setWin] = useState()
@@ -26,12 +30,12 @@ export default function Game({ gametoapp }, { boardWidth }) {
         if (playerInCheckmate === "b") {
           setWin(true)
           console.log("white wins")
-          AddModal(PopUp)
+          
         }
         if (playerInCheckmate === "w") {
           setWin(false)
           console.log("black wins")
-          AddModal(PopUp)
+          
         }
   
         console.log(`${playerInCheckmate} in checkmate`)
@@ -42,17 +46,17 @@ export default function Game({ gametoapp }, { boardWidth }) {
         setStalemate(true)
       
         console.log("in stalemate ", stalemate)
-        AddModal(PopUp)
+        
       }
 
     },[game])
 
     //send gameresult to app.js
     useEffect(()=>{
-      if (win === true){setGameResult("win")}
-      if (win === false){setGameResult("loss")}
-      if (stalemate === true){setGameResult("stalemate")}
-      if (gameResult === "win" ||  gameResult ===  "loss" || gameResult === "stalemate") {gametoapp(gameResult)}
+      if (win === true){setGameResult("win");AddModal(Won)}
+      if (win === false){setGameResult("loss");AddModal(Lost)}
+      if (stalemate === true){setGameResult("stalemate");AddModal(Draw)}
+      if (gameResult === "" || "win" ||  gameResult ===  "loss" || gameResult === "stalemate") {gametoapp(gameResult)}
     },[game, win, stalemate, gameResult])
     
     
@@ -94,6 +98,74 @@ export default function Game({ gametoapp }, { boardWidth }) {
       setCurrentTimeout(newTimeout);
       return true;
     }
+
+
+   function modalClose(){
+     CloseModal()
+     
+      safeGameMutate((game) => {
+        game.reset();
+         setGameResult("")
+        setWin("")
+        setStalemate("")
+      });
+      // stop any current timeouts
+      clearTimeout(currentTimeout);
+    
+   }
+    
+    function Won(props) {
+      return (
+        <Modal>
+          <ModalHeader>
+            <h3>Congratulations!</h3>
+          </ModalHeader>
+          <ModalBody>
+            <p>You Won!</p>
+          </ModalBody>
+          <ModalFooter>
+            <button onClick={ modalClose } className="btn btn-primary">OK</button>
+          </ModalFooter>
+        </Modal>
+      );
+    }
+
+    function Lost(props) {
+      return (
+        <Modal>
+          <ModalHeader>
+            <h3>Better Luck Next Time</h3>
+          </ModalHeader>
+          <ModalBody>
+            <p>You Lost</p>
+          </ModalBody>
+          <ModalFooter>
+            <button onClick={ modalClose } className="btn btn-primary">OK</button>
+          </ModalFooter>
+        </Modal>
+      );
+    }
+
+    function Draw(props) {
+      return (
+        <Modal>
+          <ModalHeader>
+            <h3>So Close</h3>
+          </ModalHeader>
+          <ModalBody>
+            <p>This game was a draw</p>
+          </ModalBody>
+          <ModalFooter>
+            <button onClick={ modalClose } className="btn btn-primary">OK</button>
+          </ModalFooter>
+        </Modal>
+      );
+    }
+
+
+
+
+
 
     ////Move logger is rendered
   
@@ -144,18 +216,22 @@ export default function Game({ gametoapp }, { boardWidth }) {
         />
         <FenLogger />
         </div>
+        <br/>
           <div id="boardBtnContainer"> <button id="boardBtn"
-          className="rc-button"
-          onClick={() => {
-            safeGameMutate((game) => {
-              game.reset();
-            });
-            // stop any current timeouts
-            clearTimeout(currentTimeout);
-          }}
-        >
-          reset
-        </button>
+           className="rc-button"
+           onClick={() => {
+             safeGameMutate((game) => {
+               game.reset();
+               setGameResult("")
+               setWin("")
+               setStalemate("")
+             });
+             // stop any current timeouts
+             clearTimeout(currentTimeout);
+           }}
+         >
+           reset
+         </button>
 
         <button id="boardBtn"
           className="rc-button"

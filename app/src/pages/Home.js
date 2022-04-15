@@ -44,8 +44,84 @@ const Home = () => {
             dont forget to download your secret key so you can recover your
             account if you forget your password
           </div>
-        </div>
-      </div>
+        </div></div>
+      
+    
+      <div className="chessRulesContainer">
+        <div className="LargeText"> How to Play Chess</div>
+        <div className="chessRules">
+          <div className="pieces">
+            <ul className="piecesList">
+              <li>King: the king may move one square in any direction, 
+                so long as no piece is blocking his path and the move 
+                does not put the king in check.
+              </li>
+              <li>Queen: the queen may move any number of squares straight 
+                or diagonally in any direction.
+              </li>
+              <li>Rook: sometimes called a Castle, the rook may move any 
+                number of squares in a straight line, horizontally or vertically.
+              </li>
+              <li>Bishop: the bishop may move any number of squares diagonally</li>
+              <li>Knight: the knight moves three squares total in an "L" shape. One 
+                square horizontally or vertically and two squares in a direction 90 degrees to the 
+                original direction. The knight "jumps" to its new position and is not 
+                blocked by other pieces in its way.
+              </li>
+              <li>Pawn: pawns generally move only one square in the direction of your opponents side 
+                of the board. On its first move from the starting position, the pawn can move two squares.
+                While it can only move straight ahead, a pawn can only attack diagonally. So if 
+                its path ahead is blocked, it cannot move.
+              </li>
+            </ul>
+          </div>
+          </div>
+          </div>
+          <br/>
+          <div className="bottomContainer">
+          <div className="specialMovesContainer">
+            <div className="largeText">Special Moves</div>
+            <div className="specialMoves">
+              <ul>
+                <li>EN PASSANT: if a pawn moves forward three squares, it is even with where 
+                  the opponents pawn would be if it moved forward two squares. If the opposing 
+                  pawn uses its initial two square move to become even with your pawn, you may 
+                  attack the opponent diagonally and take the piece as if it had only moved 
+                  one square.
+                </li>
+                <li>Castle: if there are no pieces between your king and either of your rooks, 
+                  and neither piece has moved, you can move the king two squares towards the rook 
+                  and move the rook one square on the opposite side of the king. You cannot castle 
+                  into, out of, or through check.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="objectiveContainer">
+            <div className="largeText">Objectives and terms</div>
+            <div className="objectives">
+              <ul>
+                <li>Check: if a king can be directly taken by an opponent's piece 
+                  on the opponent's next turn, the king is in check. If your king is in check 
+                  you must move your kinbg out of check or move another piece to block 
+                  your opponent.
+                </li>
+                <li>CheckMate: if a king is in check and there is no possible move to get out 
+                  of check, it is a checkmate and the game is over. Whomever is in checkmate 
+                  loses.
+                </li>
+                <li>StaleMate: if a king is not in check, but there are no moves 
+                  that can be made without placing itself in check, it is called a 
+                  StaleMate and the game ends in a draw.
+                </li>
+              </ul>
+            </div>
+          </div>
+          </div>
+        
+        
+        
+      
     </div>
   );
 };

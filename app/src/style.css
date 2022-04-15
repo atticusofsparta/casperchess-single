@@ -2,21 +2,27 @@
 
 #connectBtn{
  
- 
+ cursor: pointer;
 
 }
+
 #connectBtn:hover{
   
   
 }
+.modal-content{
+    
+  margin-top: 30%;
+  
+}
 #disconnectBtn{
-
+cursor: pointer;
 }
 #disconnectBtn:hover{
   
 }
 #deployBtn{
-
+cursor: pointer;
 }
 #deployBtn:hover{
   
@@ -4321,6 +4327,7 @@ fieldset:disabled .btn {
   color: #fff;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4459,6 +4466,7 @@ fieldset:disabled .btn {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  z-index: 1001;
 }
 
 .navbar-nav .nav-link {
@@ -11892,4 +11900,7 @@ legend {
 
 .list-group-item-action:hover {
   background-color: #23272b;
+}
+.superHigh{
+  z-index: 1001;
 }

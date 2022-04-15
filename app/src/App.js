@@ -24,58 +24,85 @@ const singleplayer_contract = "hash-6f978f1bd5d7071d464fa3c4fe72f5c4d7aedbad6b55
 
 function App() {
 
-  //gets game result from Game, sets result in score to increment session game details
-  const [score, setScore] = useState("");
-  const gametoapp = (gameResult) => {
+
+
+  const globalPromiseRejectionHandler = (event) => {
+    console.log("Unhandled promise rejection reason: ", event.reason);
+  }
+  
+  window.onunhandledrejection = globalPromiseRejectionHandler;
+  
+  
+      window.onunhandledrejection = function(e) {
+      e.preventDefault()
+      console.log(e.reason);
+      setAddress("0186ac6f83c5bcca34f68ea7cc82f3917ccc10ad3eac96d5ad2b1dbeb0b6c02fa9")
+    }
+  
+  
+    window.addEventListener("signer:locked", (msg) => {
+          console.log("locked");
+        
+    });
+
+ 
+
+const [score, setScore] = useState("");
+  let gametoapp = (gameResult) => {
+    
+    if (gameResult === "") {setScore("")}
     if (gameResult === "win"){setScore("win")}
     if (gameResult === "loss"){setScore("loss")}
     if (gameResult === "stalemate"){setScore("stalemate")}
+    
     console.log("gameResult", gameResult)
 
   }
+ 
+  
+   //connected account details
+   const [balance, setBalance] = useState("?");
+   const [address, setAddress] = useState("?");
 
- //connected account details
-  const [balance, setBalance] = useState("?");
-  const [address, setAddress] = useState("?");
-
-//account game detals
+  //account game detals
   const [total_games, setTotal_Games] = useState(0);
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
   const [stalemates, setStalemates] = useState(0);
 
-//session game details
+  //session game details
   const [sessionGames, setSessionGames] = useState(0)
   const [sessionWins, setSessionWins] = useState(0)
   const [sessionLosses, setSessionLosses] = useState(0)
-  const [sessionStalemates, setSessionStalemates] = useState(0)
+  const [sessionStalemates, setSessionStalemates] = useState(0)  
+
 
   useEffect(()=>{
     
     if (score === "win"){setSessionWins(sessionWins+1)}
     if (score === "loss"){setSessionLosses(sessionLosses+1)}
     if (score === "stalemate"){setSessionStalemates(sessionStalemates+1)}
-    if (score === "win" | "loss" | "stalemate"){setSessionGames(sessionGames+1)}
+    if (score === "win" || "loss" || "stalemate"){setSessionGames(sessionGames+1)}
     
   },[score])
 
+
 //set html values
-  useEffect(()=>{ 
-  
-    const textAddress = document.getElementById('textAddress');
-    const textBalance = document.getElementById('textBalance');
-    const textTotal_Games = document.getElementById('textTotal_Games');
-    const textWins = document.getElementById('textWins');
-    const textLosses = document.getElementById('textLosses');
-    const textStalemates = document.getElementById('textStalemates');
-    textAddress.textContent = `Connected account: ${address.replace(address.slice(5, 61), ' . . . ')}`;
-    textBalance.textContent = `CSPR Balance: ${balance / 1000000000}`;
-    textTotal_Games.textContent = `Total Games: ${total_games}` + ` + ${sessionGames}`;
-    textWins.textContent = `Wins: ${wins}` + ` + ${sessionWins}`;
-    textLosses.textContent = `Losses: ${losses}` + ` + ${sessionLosses}`;
-    textStalemates.textContent = `Stalemates: ${stalemates}` + ` + ${sessionStalemates}`;
-  },[address, balance, total_games, wins, losses, stalemates, sessionGames, sessionWins, sessionLosses, sessionStalemates])
+useEffect(()=>{ 
  
+  const textAddress = document.getElementById('textAddress');
+  const textBalance = document.getElementById('textBalance');
+  const textTotal_Games = document.getElementById('textTotal_Games');
+  const textWins = document.getElementById('textWins');
+  const textLosses = document.getElementById('textLosses');
+  const textStalemates = document.getElementById('textStalemates');
+  textAddress.textContent = `Connected account: ${address.replace(address.slice(5, 61), ' . . . ')}`;
+  textBalance.textContent = `CSPR Balance: ${balance / 1000000000}`;
+  textTotal_Games.textContent = `Total Games: ${total_games}` + ` + ${sessionGames}`;
+  textWins.textContent = `Wins: ${wins}` + ` + ${sessionWins}`;
+  textLosses.textContent = `Losses: ${losses}` + ` + ${sessionLosses}`;
+  textStalemates.textContent = `Stalemates: ${stalemates}` + ` + ${sessionStalemates}`;
+},[address, balance, total_games, wins, losses, stalemates, sessionGames, sessionWins, sessionLosses, sessionStalemates])
 
   //get  account data from server
   useEffect(()=>{
