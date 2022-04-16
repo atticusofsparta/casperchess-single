@@ -8,6 +8,11 @@ import Game from './pages/Game';
 import Layout from './pages/Layout';
 import axios from "axios";
 import ModalRoot from "./modules/modals/modal components/ModalRoot";
+import AddModal from "./modules/modals/modal components/AddModal";
+import CloseModal from "./modules/modals/modal components/CloseModal";
+import DeployedModal from "./modules/modals/modal files/DeployedModal";
+import ExecutionModal from "./modules/modals/modal files/ExecutionModal";
+
 
 var getDeployInterval = null;
 //import win/loss state from game
@@ -26,24 +31,24 @@ function App() {
 
 
 
-  const globalPromiseRejectionHandler = (event) => {
-    console.log("Unhandled promise rejection reason: ", event.reason);
-  }
+  // const globalPromiseRejectionHandler = (event) => {
+  //   console.log("Unhandled promise rejection reason: ", event.reason);
+  // }
   
-  window.onunhandledrejection = globalPromiseRejectionHandler;
-  
-  
-      window.onunhandledrejection = function(e) {
-      e.preventDefault()
-      console.log(e.reason);
-      setAddress("0186ac6f83c5bcca34f68ea7cc82f3917ccc10ad3eac96d5ad2b1dbeb0b6c02fa9")
-    }
+  // window.onunhandledrejection = globalPromiseRejectionHandler;
   
   
-    window.addEventListener("signer:locked", (msg) => {
-          console.log("locked");
+  //     window.onunhandledrejection = function(e) {
+  //     e.preventDefault()
+  //     console.log(e.reason);
+  //     setAddress("0186ac6f83c5bcca34f68ea7cc82f3917ccc10ad3eac96d5ad2b1dbeb0b6c02fa9")
+  //   }
+  
+  
+  //   window.addEventListener("signer:locked", (msg) => {
+  //         console.log("locked");
         
-    });
+  //   });
 
  
 
@@ -82,7 +87,7 @@ const [score, setScore] = useState("");
     if (score === "win"){setSessionWins(sessionWins+1)}
     if (score === "loss"){setSessionLosses(sessionLosses+1)}
     if (score === "stalemate"){setSessionStalemates(sessionStalemates+1)}
-    if (score === "win" || "loss" || "stalemate"){setSessionGames(sessionGames+1)}
+    if (score === "win" | "loss" | "stalemate"){setSessionGames(sessionGames+1)}
     
   },[score])
 
@@ -155,7 +160,7 @@ useEffect(()=>{
   }
 //save button
   async function deploy() {
-
+AddModal(DeployedModal)
       let totalGamesArg = total_games + sessionGames;
       let winsArg = wins + sessionWins;
       let lossesArg = losses + sessionLosses;
@@ -172,13 +177,18 @@ useEffect(()=>{
        const result = contract.callEntrypoint("add_game", args, pubkey, "casper-test", csprToMotes(1).toString(), [], 10000000); //Builds a Deploy object at add_highscore entrypoint
        const deployJSON = DeployUtil.deployToJson(result);
        Signer.sign(deployJSON, address).then((success) => { //Initiates sign request
+         CloseModal()
        sendDeploy(success);
+      
      }).catch((error) => {
        console.log(error);
        console.log(args)
+       CloseModal()
      });
+   
    }
    async function sendDeploy(signedDeployJSON) {
+     AddModal(ExecutionModal)
     axios.post("http://localhost:6100/sendDeploy", signedDeployJSON, { //Sends request to /sendDeploy endpoint in server.js. Need to send deployment from the backend do to CORS policy.
       headers: {
         'Content-Type': 'application/json'
@@ -187,8 +197,10 @@ useEffect(()=>{
       const hash = response.data;
       //updateStatus("Deployed. <a target='_blank' href='https://testnet.cspr.live/deploy/" + hash + "'>View on cspr.live</a>");
       initiateGetDeployProcedure(hash);
+      
     }).catch((error) => {
       alert(error);
+      CloseModal()
     });
   }
   async function initiateGetDeployProcedure(hash) {
@@ -230,15 +242,19 @@ useEffect(()=>{
          setSessionLosses(0);
          setSessionStalemates(0);
         console.log("Execution Successful")
+        CloseModal()
       } else if (result.hasOwnProperty("Failure")) {
         console.log("Execution Failure");
+        CloseModal()
       } else {
         console.log("Unknown Error");
+        CloseModal()
       }
       clearInterval(getDeployInterval); //Stop polling getDeploy
   
     }).catch((error) => {
       alert(error);
+      CloseModal()
       clearInterval(getDeployInterval); //Stop polling getDeploy
     });
   }

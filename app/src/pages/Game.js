@@ -18,8 +18,8 @@ export default function Game({ gametoapp }, { boardWidth }) {
     const [currentTimeout, setCurrentTimeout] = useState();
 
     //score logic
-    const [win, setWin] = useState()
-    const [stalemate, setStalemate] = useState()
+    const [win, setWin] = useState("")
+    const [stalemate, setStalemate] = useState("")
     const [gameResult, setGameResult] = useState("")
  
     
@@ -49,7 +49,7 @@ export default function Game({ gametoapp }, { boardWidth }) {
         
       }
 
-    },[game])
+    },[game, gameResult])
 
     //send gameresult to app.js
     useEffect(()=>{
@@ -58,6 +58,7 @@ export default function Game({ gametoapp }, { boardWidth }) {
       if (stalemate === true){setGameResult("stalemate");AddModal(Draw)}
       if (gameResult === "" || "win" ||  gameResult ===  "loss" || gameResult === "stalemate") {gametoapp(gameResult)}
     },[game, win, stalemate, gameResult])
+  
     
     
   
@@ -250,6 +251,3 @@ export default function Game({ gametoapp }, { boardWidth }) {
       
     );
   }
-  /**
-   *  
-   */
