@@ -12,10 +12,11 @@ Or run it locally:
 		cd app
 		run npm install
 		run nodemon server.js
-		serve -s build
+		run serve -s build
 
 	Frontend server will start on localhost:3000
 	backend server will start on localhost:6100
+	make sure to run the server and build in seperate terminals!
   
   #The Contract
   
