@@ -11,7 +11,7 @@ Or run it locally:
 		clone the repo
 		cd app
 		run npm install
-		run npm nodemon server.js
+		run nodemon server.js
 		serve -s build
 
 	Frontend server will start on localhost:3000
