@@ -1,23 +1,21 @@
 # Casper Chess singleplayer
 
-To run the program:
+You can check it out at http://casperchess.hotchocolate.finance
+(however the site is not yet whitelisted on casper signer, to interact with the signer download the signer from git hub, modify the manifest to add http://casperchess.hotchocolate.finance and then install the signer under development mode)
 
-	clone the repo
-	run npm install
-	run npm nodemon server.js
-	run npm start
-	
-Frontend server will start on localhost:3000
-backend server will start on localhost:6100
+Or run it locally:
+
+	To run the program:
+
+		clone the repo
+		cd app
+		run npm install
+		run npm nodemon server.js
+		serve -s build
+
+	Frontend server will start on localhost:3000
+	backend server will start on localhost:6100
 
 
-# If you experience issues:
-	Make sure the node address in server.js is active/responsive (eventually this wont be an issue when casper has a node consolidation
-		service like ethereum does with infura)
-	
-	
-	Make sure the dependencies are installed
-	
-	if this doesnt work, try running npm run build, then serve -s build (if using vscode)
 	
 	
